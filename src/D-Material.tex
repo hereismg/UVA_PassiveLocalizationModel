@@ -1,23 +1,49 @@
-% --------------------------------参考文献：
-
-\bibliography{res/Reference}
+%========================= 参考文献 =========================
+\bibliography{src/E-Reference}
 \nocite{*}      % 引用所有的参考文献，不论是否被引用
+
 
 
 %========================= 附录 =========================
 
-
 \appendix
-\section{}
+\section{程序代码}
 
-本文主要研究了开放三孩政策背景下对促进我国新出生人口的变化问题。首先通过国家统计局查找自2000年至2020年的相关人口数据，并对数据进行预处理，依据现有数据构建相关数学模型对开放三孩政策后各类相关政策的落地方案进行决策；利用多元回归分析多因素背景下我国总人口和新出生人口的变化趋势。
+\begin{lstlisting}[caption={搜索代码}]
+import java.util.*;
 
-针对问题一：为了预测开放三孩政策后我国在未来10年内的人口状况。首先通过国家统计局查找相关数据进行提取整合，并结合我国人口的年龄结构对人口各方面的影响，将年龄结构划分为年轻型人口、成年型人口和老年型人口，依据国家相关规定可将0至14岁定为年轻型人口、15至64岁定为成年型人口、65岁以上定为老年型人口，最后，通过建立 模型得出人口的增长趋势。
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner( System.in);
+
+        double d0509, d0809, d0508;
+        d0509 = input.nextDouble();
+        d0809 = input.nextDouble();
+        d0508 = input.nextDouble();
+
+
+        double x = Math.sqrt(d0509*d0509 - ((d0509*d0509 - d0508*d0508 - d0809*d0809)/(2*d0809)));
+        double y = (d0509*d0509 - d0508*d0508)/(2*d0809);
+        
+
+        System.out.println("x = "+x);
+        System.out.println("y = "+y);
+    }
+}
+\end{lstlisting}
+
 
 \section{三圆定点模型示意图}
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphic{res/ThreeCirclesAndPlace.png}
-%     \caption{三圆定位示意图1}
-% \end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.7]{res/figure111148.png}
+    \caption{示意图一}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.7]{res/figure111149.png}
+    \caption{示意图二}
+\end{figure}
+

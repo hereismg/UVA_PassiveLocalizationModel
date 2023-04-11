@@ -225,11 +225,10 @@
 
 为了方便后文描述，在此引入三圆定位模型的概念。
 
-\newtheorem{mythm}{定理}[section]
-\begin{mythm}
+\begin{theorem}
     % \label{线段半径定理}
     在平面内，一线段两端（线段长度已知）和该线段垂直平分线上的一点所构成的角与该线段可构成圆及所得圆的半径。（本题以特殊角证明，但结论适用）
-\end{mythm}
+\end{theorem}
 
 \begin{proof}
     设线段两端的端点为$a$和$b$，在线段$ab$垂直平分线上的点为$c$，连接线段$ac$和线段$bc$，分别做垂直平分线，相交于一点，此时可得一圆。设线段$ab$的长度为$l$，$\angle acb$的度数为$\alpha$。故有三角函数方程：
@@ -246,17 +245,249 @@
     \end{equation}
 \end{proof}
 
-……
+第二问基于第一问所建立的模型，已知某位置与理想模型位置存在偏差的无人机，接收到位置与理想模型位置无偏差且编号为 FY00和 FY01的无人机发射的信号，为实现位置偏差无人机的有效定位，还需一台或一台以上位置无偏差无人机发射信号。
 
+\begin{figure}[h]
+    \centering
+    \includegraphics{res/lemmaFigure.png}
+    \caption{引理图}
+\end{figure}
 
-\subsection{问题1-3：由已知条件及表1数据给出相应的调整方案
-问题的分析与重述}
+\subsubsection{模型的求解}
+
+如图。考虑到在直角坐标系下，求解圆形方程较繁琐，为简化计算，本小题在上一小题的基础上建立新的坐标系，使得无人机在同一平面内。设点$O$和点$A$分别是编号为$FY00$和$FY01$的无人机，它们的极坐标分别为点$O(0,0°)$和点$A(R,0°)$，点$P$是位置偏差的无人机且在线段$OA$的垂直平分线上，连接线段$OP$和$AP$，由引理确定圆$O_1$，设圆$O_1$的圆心为$O_1$，如图（为方便图解，此图为某理想状态，下文同）。最终编号未知无人机的偏离轨迹在劣弧$OO_1A$上。几何表示，设圆$O_1$的半径为$r_1$，则$r_1=\frac{R}{2\sin\alpha_1}$。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{res/figure102034.png}
+    \caption{圆$O_1$位置简化图}
+\end{figure}
+
+即圆$O_1$的圆心坐标为：
+
+\begin{equation*}
+    \left(
+        \frac{R}{2\tan\alpha_1},\frac{R}{2}
+    \right)
+\end{equation*}
+
+即圆$O_1$的方程为：
+
+\begin{equation}
+    \left(
+        x - \frac{R}{2\tan\alpha_1}
+    \right)^2
+    +
+    \left(
+        y - \frac{R}{2}
+    \right)^2
+    =
+    \left(
+        \frac{R}{2\sin\alpha_1}
+    \right)^2
+\end{equation}
+
+另设一架发射信号无人机为点$B$，位置偏差无人机的位置为点$p_1$，连接$BP_1$、$OB$和$OP$，由引理确定圆$O_2$，设圆$O_2$的圆心为$O_2$。如图。即编号未知无人机的偏离轨道在劣弧$OO_2P_1$上。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{res/figure04111100.png}
+    \caption{圆$O_2$位置化简图}
+\end{figure}
+
+设圆$O_2$的半径为$r_2=\frac{R}{2\sin\alpha_2}$。
+
+当圆$O_1$与圆$O_2$联立时，两圆相交于$O$点与另一点，此时除点外的交点就是偏差无人机的置。此时$B$点信号发射信号无人机位置及编号确定，与本题中除编号为FY00和FY01的无人机外，其他无人机位置及编号均未知的题意不符。依题意得，改变$B$点信号发射机的编号，即$B$点位置改变。此时，若不改变圆的半径，则两圆可能除点$O$外无交点；但倘若$B$点改变位置的同时，半径也随之改变，使之不管 点怎么改变，两圆都会相交于两个交点。这样即可确定$P$点无人机的位置，但与之而来的结果是 点可以出现在平面内绝大多数位置，即在实际操作中无法准确定位出接收信号无人机的位置。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{res/figure111106.png}
+    \caption{圆$O_1$、圆$O_2$联立图}
+\end{figure}
+
+证明有：设$B$点的坐标为$(x_1,y_1)$，当$B$点的横坐标$x$发生变化时，纵坐标$y$也随之变化，但由题易知$B$点坐标只有八个位置可以选择。设$A$点所占位置为第一个点（对无人机轨迹图做对称轴，$A$点在对称轴上）取值为$0$，设变量$a_2$为$\angle OO_1B$的角度大小，即$a_2$的取值范围为$\left[ 0,\pi \right]$，设变量$b_1$为轨迹图上$B$点所在位置的数值，即$b_1$的取值范围为$\left[ 1,8 \right]$。
+
+\begin{equation}
+    \begin{cases}
+        x_1 = \cos(\frac{2\pi}{9}b_1 + \frac{\pi}{2}) \\
+        y_1 = \sin(\frac{2\pi}{9}b_1 + \frac{\pi}{2}) \\
+    \end{cases}
+\end{equation}
+
+ 线段$BO$的斜率为：
+
+ \begin{equation}
+    k_1 = - \frac{x_1}{y_1}
+ \end{equation}
+
+ 设圆心$O_2$到线段$BO$的距离为$\lambda_1$.
+
+ 由已知数据解得：
+
+ \begin{equation}
+    \lambda_1 = \frac{1}{2\tan\alpha_2}
+ \end{equation}
+
+ 圆$O_2$的圆心坐标为：
+
+ \begin{equation}
+    \left(
+        \frac{x_1}{2} + \lambda_1\cos(\arctan k_1),
+        \frac{y_1}{2} + \lambda_1\sin(\arctan k_1)
+    \right)
+ \end{equation}
+
+综上，圆$O_2$的表达式为：
+
+\begin{equation}
+    \left(
+        x -
+        \left(
+            \frac{x_1}{2} + \lambda_1\cos(\arctan k_1)
+        \right)
+    \right)^2
+    +
+    \left(
+        y -
+        \left(
+            \frac{y_1}{2} + \lambda_1\sin(\arctan k_1)
+        \right)
+    \right)^2
+    =
+    \left(
+        \frac{R}{2\sin\alpha_2}
+    \right)
+\end{equation}
+
+联立方程，得出除了$(0, 0)$外的无数个解，不符合实际。
+
+\begin{figure}
+    \centering
+    \includegraphics{res/figure111121.png}
+    \caption{两圆位置关系示意图}
+\end{figure}
+
+对此，再设一架发射信号无人机为点$C$，位置偏差无人机的位置为点$P_2$,连接$OP_2$、$OC$和$CP_2$，由引理确定圆$O_3$，如图。同上理得编号未知无人机的偏离轨道在劣弧上。几何表示有：
+
+\begin{figure}
+    \centering
+    \includegraphics{res/figure111123.png}
+    \caption{三圆联立图}
+\end{figure}
+
+设圆$O_3$的半径为$r_3$，则$r_3=\frac{R}{2\sin\alpha_3}$。此时在坐标平面内除轨迹圆外还有三个圆。由前文假设，得出相应结论，即圆$O_3$的数据为：变量$a_3$，$C$点坐标为：
+
+\begin{equation}
+    \begin{cases}
+        x_2 = \cos\left(
+            \frac{2\pi}{9}b_2 + \frac{\pi}{2}
+        \right) \\
+        y_2 = \sin\left(
+            \frac{2\pi}{9}b_2 + \frac{\pi}{2}
+        \right)
+    \end{cases}
+\end{equation}
+
+线段$OC$斜率：
+
+\begin{equation}
+    k_2 = - \frac{x_2}{y_2}
+\end{equation}
+
+圆点$O_3$到线段$OC$的距离为：
+
+\begin{equation}
+    \lambda_2 = \frac{1}{2\tan\alpha_3}
+\end{equation}
+
+圆心$O_3$的坐标：
+
+\begin{equation}
+    \left(
+        \frac{x_2}{2} + \lambda_2\cos(\arctan k_2),
+        \frac{y_2}{2} + \lambda_2\sin(\arctan k_2)
+    \right)
+\end{equation}
+
+圆$O_3$的表达式：
+
+\begin{equation}
+    \left(
+        x -
+        \left(
+            \frac{x_2}{2} + \lambda_2\cos(\arctan k_2)
+        \right)
+    \right)^2
+    +
+    \left(
+        y -
+        \left(
+            \frac{y_2}{2} + \lambda_1\sin(\arctan k_2)
+        \right)
+    \right)^2
+    =
+    \left(
+        \frac{R}{2\sin\alpha_3}
+    \right)
+\end{equation}
+
+为方便后续计算，在此对圆$O_1$添加一个变量$a_1$，使得圆$O_1$大小可改变。改变$b_1$和$b_2$的大小，此时两个圆开始移动；与此同时改变$a_1$、$a_2$和$a_3$的大小，让圆$O_1$、圆$O_2$和圆$O_3$大小改变。当三圆相交于两交点时，便确定$P$点位置，从而确定偏无人机的位置。
+
+\begin{figure}
+    \centering
+    \includegraphics{res/figure111138.png}
+    \caption{三圆定点模型示意图}
+\end{figure}
+
+综上所述，求得模型方程组为：
+
+\begin{equation}
+    \begin{cases}
+        \left(x - \frac{R}{2\tan\alpha_1}\right)^2 +
+        \left(y - \frac{R}{2}\right)^2 =
+        \left(\frac{R}{2\sin\alpha_1}\right)^2    \\
+
+        \left[x - (\frac{x_1}{2} + \lambda_1\cos(\arctan k_1))\right]^2 +
+        \left[y - (\frac{y_1}{2} + \lambda_1\sin(\arctan k_1))\right]^2 =
+        \left(\frac{R}{2\sin\alpha_2}\right)^2    \\
+
+        \left[x - (\frac{x_2}{2} + \lambda_2\cos(\arctan k_2))\right]^2 +
+        \left[y - (\frac{y_2}{2} + \lambda_21\sin(\arctan k_2))\right]^2 =
+        \left(\frac{R}{2\sin\alpha_3}\right)^2    \\
+    \end{cases}
+\end{equation}
+
+从而确定还需两架发射信号无人机才能确定位置偏差无人机的定位。
+
+% \fbox{
+% \begin{minipage}[h]{30em}
+%     \centering
+%     \begin{enumerate}
+%         \item 第一次调整由FY00、FY03、FY06、FY09四架无人机发射信号，其余无人机接收信号并且调整自己的位置
+%         \item 以其中某个接收信号的无人机为研究对象，记该无人机为A
+%         \item 无人机A接收到三个方向信号，根据三圆定位模型计算出自己的位置P1
+%         \item 无人记A根据自己的编号计算出自己的理想位置P2
+%         \item 无人记A根据前两部计算出的P1、P2计算出位置修正向量j1
+%         \item 无人记A根据修正向量调整自己的位置
+%         \item 所有无人机执行上述步骤后，将全部位于同一圆周上
+%         \item 第二次调整由FY00、FY01两架无人机发射信号，其余无人机接收信号并且调整自己的位置
+%         \item 以其中某个接收信号无人机为研究对象，记该无人机为B
+%         \item 无人机B接收到一个方向信息，根据该信息计算出自己的位置P3
+%         \item 无人记B根据自己的编号计算出自己的理想位置P4
+%         \item 无人记B根据前两部计算出的P3、P4计算出位置修正向量j2
+%         \item 无人记B根据修正向量j2调整自己的位置
+%         \item 所有无人机执行上述步骤后，将全部均匀的分布在圆周上
+%     \end{enumerate}
+% \end{minipage}
+% }
+
+\subsection{问题1-3：由已知条件及表1数据给出相应的调整方案}
 
 在该小节中，首先引入下面的引理：
 
-\begin{mythm}
+\begin{theorem}
     在极坐标系钟，已知$A(\rho_1, \theta_1)$、$B(\rho_2, \theta_2)$，则平面直角坐标系钟的$\widehat{AB}=(\rho_2\cos\theta_2 - \rho_1\cos\theta_1, \rho_2\sin\theta_2 - \rho_1\sin\theta_1)$.
-\end{mythm}
+\end{theorem}
 
 \begin{proof}
     以点$O$为圆心，极坐标$\rho$轴正方向为$x$轴正方向。则根据参数方程：
