@@ -10,7 +10,7 @@
     \caption{空间立体鸟瞰图}
 \end{figure}
 
-\textbf{模型一的建立——空间立体直角坐标定位模型}
+\subsubsection{模型一的建立——空间立体直角坐标定位模型}
 
 依题意在空间直角坐标系中 是确定的，假定引入一参照物观测站（相对于原点 ），定位模型处于空间直角坐标系中，则无人机所到目标位置的真实坐标为 ，无人机观测站的坐标为 。各无人机到目标之间的距离为
  （1-1）
@@ -163,7 +163,98 @@
 \rho'_i - d\Delta x_i - \rho_i + \varepsilon_{\rho i}
 \end{equation}
 
-……
+在式中：
+
+\begin{align}
+    a_i 
+    & = 
+    \frac{\partial\left(\frac{x_i-x_0}{\rho_i^*}\right)}{\partial\Delta x_i}
+    =
+    \left[
+        \frac{1}{\rho_i^*} - 
+        \frac{x_i-x_0}{(\rho_I^*)^3} - 
+        \frac{x_i-x_0(y_i-y_0)}{(\rho_i^*)^3} - 
+        \frac{(x_i-x_0)(z_i-z_0)}{(\rho_i^*)^3}
+    \right] \label{111819}\\
+    b_i
+    & =
+    \frac{\partial\left(\frac{y_i-y_0}{\rho_i^*}\right)}{\partial\Delta x_i}
+    =
+    \left[
+        -\frac{(x_i-x_0)(y_i-y_0)}{(\rho_i^*)^3}\cdot\frac{1}{\rho_i^*} -
+        \frac{(y_i-y_0)^2}{(\rho_i^*)^3} -
+        \frac{(y_i-y_0)(z_i-z_0)}{(\rho_i^*)^3}
+    \right]\\
+    c_i
+    & =
+    \frac{\partial\left(\frac{y_i-y_0}{\rho_i^*}\right)}{\partial\Delta x_i}
+    =
+    \left[
+        -\frac{(x_i-x_0)(z_i-z_0)}{(\rho_i^*)^3} -
+        \frac{(y_i-y_0)(z_i-z_0)}{(\rho_i^*)^3}\cdot\frac{1}{\rho_i^*} -
+        \frac{(z_i-z_0)^2}{(\rho_i^*)^3}
+    \right]\\
+    d_i
+    & =
+    \frac{\partial\rho_i^*}{\partial\Delta x_i}
+    =
+    \left[
+        - \frac{x_i-x_0}{\rho_i^*}\cdot
+        \frac{y_i-y_0}{\rho_i^*}\cdot
+        \frac{z_i-z_0}{\rho_i^*}
+    \right] \label{111820}\\
+\end{align}
+
+联立\ref{111819} - \ref{111820}得到偏差方程为
+
+\begin{equation}
+    (A-\Delta A)y=(B-\Delta B)
+\end{equation}
+
+又令
+
+\begin{equation}
+    \begin{cases}
+        \Delta x = \left[\Delta x_1 \quad \Delta x_2 \quad \Delta x_3\right]    \\
+        G_1 = diag\left[a_1 \quad a_2 \quad a_3\right]  \\
+        G_2 = diag\left[b_1 \quad b_2 \quad b_3\right]  \\
+        G_3 = diag\left[c_1 \quad c_2 \quad c_3\right]  \\
+        G_4 = diag\left[d_1 \quad d_2 \quad d_3\right]  \\
+    \end{cases}
+\end{equation}
+
+则有：
+
+\begin{equation}
+    \begin{cases}
+        A^* = A - \Delta A  \\
+        B^* = B - \Delta B  \\
+    \end{cases}
+\end{equation}
+
+即得：
+
+\begin{equation}
+    A^*y = B^*
+\end{equation}
+
+$\Delta A$，$\Delta B$可以表示为：
+
+\begin{equation}
+    \begin{aligned}
+        \Delta A = \left[a_i\Delta x_i \quad b_i\Delta x_i \quad c_i\Delta x_i\right] = \left[G_1\Delta x \quad G_2\Delta x \quad G_3\Delta x\right]    \\
+        \Delta B = \left[d_i\Delta x\right] = \left[G_4 \Delta x\right]
+    \end{aligned}
+\end{equation}
+
+令$H_y = xG_1+yG_2+zG_3-G_4$，其中$(x,y,z)$的值为初步定位方程的解，即目标的定位解为：
+
+\begin{equation}
+    \begin{cases}
+        min\left(\|\Delta x\|_2^2 + \lambda\|y\|_2^2 \right)    \\
+        subject \quad to \quad Ay-B+H_y\Delta x = 0 \\
+    \end{cases}
+\end{equation}
 
 综上联立上式得表达式定位解为：
 
@@ -179,7 +270,9 @@
     \right )
 \end{equation}
 
-\textbf{模型特征值检验}：为验证所提定位模型得有效性及适应性，本题对题设的假设条件进行带入检验，依题意即得$\alpha=40$，半径为常数$\rho$，既有$x=\rho\cos\alpha, y=\rho\sin\alpha,z=\theta$，$\theta$为常数。对假设检验数据有下：
+\subsubsection{模型特征值检验}
+
+为验证所提定位模型得有效性及适应性，本题对题设的假设条件进行带入检验，依题意即得$\alpha=40$，半径为常数$\rho$，既有$x=\rho\cos\alpha, y=\rho\sin\alpha,z=\theta$，$\theta$为常数。对假设检验数据有下：
 
 \begin{table}[htp!]
     \centering
@@ -211,39 +304,79 @@
 
 综上通过对数据处理，基于定位模型的定位一般方程的建立求解，并且引入符合题意的假设数值进行检验，控制高度一致使得无人机群在同一平面得到如下图所示的空间立体模型图：
 
-
 \begin{figure}
     \centering
     \includegraphics{res/PositionTheModelStereogram.png}
     \caption{检验定位模拟图}
 \end{figure}
 
+\subsubsection{结果分析}
+
+由上图可得，在空间立体图中从$xoz$面及$yoz$面的投影所呈现的直线，且两直线共交于一点，则可得出无人机群在同一高度的平面上。对定位模型进行函数检验即可得出函数轨迹与无人机群编排契合，故可验证该定位模型的正确性，即建立定位模型如下：
+
+\begin{equation}
+    y_{Tu} = 
+    \left[
+        A^T H_y^{-2} A + \left(
+            \frac{1}{2} \min\frac{E\{c_{2i}^2\}}{c_{1i}^2\mu_i} +
+            \frac{1}{2} \max\frac{E\{c_{2i}^2\}}{c_{1i}^2\mu_i}
+        \right)I
+    \right]^{-1}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+%=============================================
+% 1-2
+%=============================================
 
 \subsection{问题1-2：求解实现有效定位的无人机数量}
 
+本小节的解题流程如下：
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.8]{res/figure111919.png}
+    \caption{解题流程图}
+\end{figure}
+
 \subsubsection{模型的分析}
 
-为了方便后文描述，在此引入三圆定位模型的概念。
+为了方便后文描述，在此引入三圆定位模型的概念。\newline
 
-\begin{theorem}
-    % \label{线段半径定理}
-    在平面内，一线段两端（线段长度已知）和该线段垂直平分线上的一点所构成的角与该线段可构成圆及所得圆的半径。（本题以特殊角证明，但结论适用）
-\end{theorem}
+\fbox{
+\centering
+\begin{minipage}{30em}
+    \begin{theorem}
+        % \label{线段半径定理}
+        在平面内，一线段两端（线段长度已知）和该线段垂直平分线上的一点所构成的角与该线段可构成圆及所得圆的半径。（本题以特殊角证明，但结论适用）
+    \end{theorem}
 
-\begin{proof}
-    设线段两端的端点为$a$和$b$，在线段$ab$垂直平分线上的点为$c$，连接线段$ac$和线段$bc$，分别做垂直平分线，相交于一点，此时可得一圆。设线段$ab$的长度为$l$，$\angle acb$的度数为$\alpha$。故有三角函数方程：
+    \begin{proof}
+        设线段两端的端点为$a$和$b$，在线段$ab$垂直平分线上的点为$c$，连接线段$ac$和线段$bc$，分别做垂直平分线，相交于一点，此时可得一圆。设线段$ab$的长度为$l$，$\angle acb$的度数为$\alpha$。故有三角函数方程：
 
-    \begin{equation}
-        \frac{l}{\sin 2\alpha}=
-        \frac{r}{\sin(\frac{\pi}{2}-\alpha)}
-    \end{equation}
+        \begin{equation}
+            \frac{l}{\sin 2\alpha}=
+            \frac{r}{\sin(\frac{\pi}{2}-\alpha)}
+        \end{equation}
 
-    解得
+        解得
 
-    \begin{equation}
-        r=\frac{l}{2\sin\alpha}
-    \end{equation}
-\end{proof}
+        \begin{equation}
+            r=\frac{l}{2\sin\alpha}
+        \end{equation}
+    \end{proof}
+\end{minipage}
+}\newline
 
 第二问基于第一问所建立的模型，已知某位置与理想模型位置存在偏差的无人机，接收到位置与理想模型位置无偏差且编号为 FY00和 FY01的无人机发射的信号，为实现位置偏差无人机的有效定位，还需一台或一台以上位置无偏差无人机发射信号。
 
@@ -513,10 +646,175 @@
 
 第一次调整时，圆心上的FY00无人机和圆周上的FY03、FY06、FY09三架飞机遂行发射信号，其他无人机接收这四架无人机的信号，每个无人机都可获得三个方向信息。
 
-以其中某架无人机为研究对象，记该无人机为点$Q$，设其获得角度信息为$\alpha_1$、$\alpha_2$、$\alpha_3$。此时，于点$Q$而言，圆周上的三架发射信号无人机的位置不确定，为了方便后文分析，不妨令其中一架发射信号无人机所在方向为极坐标正方向，建立极坐标系。那么另外两架无人机必然分布在同一圆周上。
+以其中某架无人机为研究对象，记该无人机为点$Q$，设其获得角度信息为$\alpha_1$、$\alpha_2$、$\alpha_3$。此时，于点$Q$而言，圆周上的三架发射信号无人机的位置不确定，为了方便后文分析，不妨令其中一架发射信号无人机所在方向为极坐标正方向，建立极坐标系。那么另外两架无人机必然分布在同一圆周上（如图\ref{figure111930}）。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{res/figure111930.png}
+    \caption{坐标偏差图}
+    \label{figure111930}    % ！！！为什么label放在下面索引正常？放在上面就错误？？？
+\end{figure}
+
+此时，应用前文中的三圆定位模型，令该模型中的参数$r=98m$，计算无人机的位置信息。记所有无人机的位置信息为如下矩阵：
+
+\begin{equation}
+    E = \left[
+        \begin{matrix}
+            \rho_1 &\rho_2 &\rho_4 &\rho_5 &\rho_7 &\rho_8 \\
+            \theta_1 &\theta_2 &\theta_4 &\theta_5 &\theta_7 &\theta_8 \\
+        \end{matrix}
+    \right]
+\end{equation}
+
+接下来根据前文中的定理\ref{}，存在公式：
+
+\begin{equation}
+    \overrightarrow{v} = (\rho_2\cos\theta_2 - \rho_1\cos\theta_1, \quad\rho_2\sin_2\theta_2 - \rho_1\sin\theta_1)
+\end{equation}
+
+首先计算出每架无人机的修正向量。最后，接受信号的无人机根据自己的修正向量调整自己的位置。调整结束后，所有无人机都位于半径为 的圆周上。
+接下来开始第二次调整。无人机FY00和FY01发出信号，其余的无人机接收信号。并且以FY00和FY01为正方向，顺时针为正方向建立极坐标系。
+
+以其中一个无人机为例，记接收到的方向信息为 ，有如下图\ref{figure112026}所示：
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.8]{res/figure112026.png}
+    \caption{接收信息方向图}
+    \label{figure112026}
+\end{figure}
+
+易得出该无人机的极坐标为$(98, \pi-2\alpha)$。根据引理可得修正向量为：
+
+\begin{equation}
+    \overrightarrow{j} = \left(100\cos\frac{2k\pi}{9} - 98\cos(\pi-2\alpha), \quad 100\sin\frac{2k\pi}{9} - 98\sin(\pi - 2\alpha)\right)
+\end{equation}
+
+其中$k\in\{1, 2, 3, \cdots, 9\}$.无人机根据修正向量$\overrightarrow{j}$调整到自己得理想位置。
+
+\begin{figure}[htbp]
+    \centering
+
+    % 并列的第一章图片
+    \begin{minipage}{15em}
+        \centering
+        \includegraphics[scale=0.5]{res/figure112041A.png}
+        \caption{问题1-3表一数据可视化}
+    \end{minipage}
+    \qquad
+
+    % 并列的第二章图片
+    \begin{minipage}{15em}
+        \centering
+        \includegraphics[scale=0.5]{res/figure112041B.png}
+        \caption{问题1-3表一数据偏差调整}
+    \end{minipage}
+
+\end{figure}
+
+\subsection{问题2}
+
+为了方便分析，在锥形无人机编队中，任意相邻两架无人机之间的距离已知，记为：
+
+\begin{equation}
+    \overrightarrow{d} = (d_{0102}, d_{0103}, \cdots d_{1415})^T
+\end{equation}
+
+在接下来的调整中，使无人机FY05、FY08、FY09发射信号，其他无人机接收信号，建立如下图\ref{figure112051}的直角坐标系：
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.8]{res/figure112051.png}
+    \caption{锥形无人机编排示意图}
+    \label{figure112051}
+\end{figure}
+
+此时，记无人机FY05为点$A$，FY08为点$B$，FY09为点$C$。其中，点$B$和点$C$的公式易得：
+
+\begin{equation}
+    \begin{aligned}
+        B(0, \frac{d_{0809}}{2})    \\
+        C(0, -\frac{d_{0809}}{2})   \\
+    \end{aligned}
+\end{equation}
+
+设方程：
+
+\begin{equation}
+    \begin{cases}
+        x^2 + (y - \frac{d_{0809}}{2})^2 = d_{0508}^2 \\
+        x^2 + (y + \frac{d_{0809}}{2})^2 = d_{0509}^2 \\
+    \end{cases}
+\end{equation}
+
+解得：
+
+\begin{equation}
+    \begin{cases}
+        x = \pm \sqrt{d_{0509}^2 - \left(\frac{d_{0509}^2 - d_{0509}^2 + d_{0809}^2}{2d_{0809}}\right)} \\
+        y = \frac{d_{0509}^2 - d_{0508}^2}{2d_{0809}}   \\
+    \end{cases}
+\end{equation}
+
+舍去不合理的解可得$A$点坐标为：
+
+\begin{equation}
+    \left(
+        \sqrt{d_{0509}^2 - \left(\frac{d_{0509}^2 - d_{0509}^2 + d_{0809}^2}{2d_{0809}}\right)}, \quad
+        \frac{d_{0509}^2 - d_{0508}^2}{2d_{0809}}
+    \right)
+\end{equation}
+
+点$A$，$B$，$C$的坐标分别记为：
+
+\begin{equation}
+    \begin{cases}
+        A(x_a, y_a) \\
+        B(x_b, y_b) \\
+        C(x_c, y_c) \\
+    \end{cases}
+\end{equation}
+
+接下来，以其中某个无人机为研究对象，记该无人机为点$M$。$M$收到了两个方向信息分别记为$\alpha_1$、$\alpha_2$，则根据引理一，可以的到圆$O_1$、$O_2$。如下图\ref{figure112104}所示：
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.7]{res/figure112104.png}
+    \caption{锥形编队坐标图}
+    \label{figure112104}
+\end{figure}
+
+它们的圆心与半径分别入下：
+
+\begin{align}
+    &\begin{cases}
+        r = \frac{d_{0809}}{2\sin\alpha_1}  \\
+        O_1(r\sin\alpha_1, 0)   \\
+    \end{cases} \\
+    &\begin{cases}
+        r = \frac{d_{0509}}{2\sin\alpha}    \\
+        O_2 \left(
+            \frac{x_a + x_b}{2} + r\cos(\arctan k), \quad
+            \frac{y_a + y_b}{2} + r\sin(\arctan k)
+        \right) \\
+        k = \frac{x_a - x_b}{y_b - y_a} \\
+    \end{cases}
+\end{align}
+
+两圆必然交于点$B$与点$M(x_m, y_m)$. 记点$M$的合理位置坐标为$(x_p, y_p)$，则无人机$M$的修正向量为
+
+\begin{equation}
+    \overrightarrow{j} = (x_p - x_m, y_p - y_m)
+\end{equation}
+
+无人机$M$根据修正向量$\overrightarrow{j}$调整自己的位置。
+
+根据贪婪算法，当所有的无人机都调整到自己的合理的位置时，对于整个无人机队列来说就达到了合理的形状，进而调整了位置。
 
 
-
+% ==============================================
+%
+% ==============================================
 
 
 \section{模型评价与推广}
@@ -541,3 +839,4 @@
 \subsection{模型的推广：}
 
 在大数据的背景下，根据本文对无源定位的模型计算一定程度上便捷了相关工作人员。同样，本文在计算的同时也参杂了一些合理的主观构想和特殊数据，在合理的同时也具有一定的不确定性。
+
